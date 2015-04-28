@@ -266,6 +266,7 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
     if ((self = [super initWithFrame:frame])) {
 		self.userInteractionEnabled = NO;
         self.backgroundColor = [UIColor clearColor];
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		self.alpha = 0.0f;
         _activityCount = 0;
         
@@ -307,6 +308,12 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
     return self;
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    CGSize superViewSize = self.frame.size;
+    self.hudView.center = CGPointMake(superViewSize.width / 2,
+                                      superViewSize.height / 2);
+}
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
     
