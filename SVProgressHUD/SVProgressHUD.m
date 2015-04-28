@@ -27,6 +27,7 @@ static UIColor *SVProgressHUDBackgroundColor;
 static UIColor *SVProgressHUDForegroundColor;
 static CGFloat SVProgressHUDCornerRadius;
 static CGFloat SVProgressHUDRingNoTextRadius;
+static BOOL SVProgressHUDAdjustingOnKeyboard;
 static CGFloat SVProgressHUDRingThickness;
 static UIFont *SVProgressHUDFont;
 static UIImage *SVProgressHUDInfoImage;
@@ -119,6 +120,11 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
 + (void)setRingNoTextRadius:(CGFloat)radius {
     [self sharedView];
     SVProgressHUDRingNoTextRadius = radius;
+}
+
++ (void)setAdjustingOnKeyboard:(BOOL)adjusting {
+    [self sharedView];
+    SVProgressHUDAdjustingOnKeyboard = adjusting;
 }
 
 + (void)setInfoImage:(UIImage*)image{
@@ -263,6 +269,7 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
 		self.alpha = 0.0f;
         _activityCount = 0;
         
+        SVProgressHUDAdjustingOnKeyboard = YES;
         SVProgressHUDRingNoTextRadius = 24;
         SVProgressHUDBackgroundColor = [UIColor whiteColor];
         SVProgressHUDForegroundColor = [UIColor blackColor];
@@ -673,8 +680,8 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
         [[NSNotificationCenter defaultCenter] postNotificationName:SVProgressHUDWillAppearNotification
                                                             object:nil
                                                           userInfo:userInfo];
-        
-        [self registerNotifications];
+        if (SVProgressHUDAdjustingOnKeyboard)
+            [self registerNotifications];
         self.hudView.transform = CGAffineTransformScale(self.hudView.transform, 1.3, 1.3);
         
         if(self.isClear) {
