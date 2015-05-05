@@ -29,6 +29,7 @@ typedef NS_ENUM(NSUInteger, SVProgressHUDMaskType) {
 
 #pragma mark - Customization
 
++ (void)applyBlurBackground;
 + (void)setBackgroundColor:(UIColor*)color;                 // default is [UIColor whiteColor]
 + (void)setForegroundColor:(UIColor*)color;                 // default is [UIColor blackColor]
 + (void)setCornerRadius:(CGFloat)cornerRadius;              // default is 14 pt

@@ -92,6 +92,19 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
 	[[self sharedView] setStatus:string];
 }
 
++ (void)applyBlurBackground {
+    [self sharedView].hudView.backgroundColor =
+    SVProgressHUDBackgroundColor = [UIColor clearColor];
+
+     UIToolbar *toolbar = [[UIToolbar alloc] init];
+    CGRect frame = [[self sharedView].hudView bounds];
+    frame.size.height += 1;
+    toolbar.frame = frame;
+    toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [toolbar setBarTintColor:nil];
+    [[self sharedView].hudView insertSubview:toolbar atIndex:0];
+}
+
 + (void)setBackgroundColor:(UIColor *)color {
     [self sharedView].hudView.backgroundColor = color;
     SVProgressHUDBackgroundColor = color;
@@ -156,6 +169,7 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
 #pragma mark - Show Methods
 
 + (void)show {
+    [SVProgressHUD applyBlurBackground];
     [self showWithStatus:nil];
 }
 
