@@ -169,7 +169,6 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
 #pragma mark - Show Methods
 
 + (void)show {
-    [SVProgressHUD applyBlurBackground];
     [self showWithStatus:nil];
 }
 
